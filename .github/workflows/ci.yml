@@ -26,7 +26,7 @@ jobs:
         run: nix develop -c pnpm typecheck
 
       - name: Run test
-        run: nix develop -c pnpm test
+        run: nix develop -c pnpm test --run
 
       - name: Run build
         run: nix develop -c pnpm build

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Flake check
+        run: nix flake check
+
+      - name: Install deps
+        run: nix develop -c pnpm install --frozen-lockfile
+
+      - name: Run lint
+        run: nix develop -c pnpm lint
+
+      - name: Run typecheck
+        run: nix develop -c pnpm typecheck
+
+      - name: Run test
+        run: nix develop -c pnpm test
+
+      - name: Run build
+        run: nix develop -c pnpm build

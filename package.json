@@ -1,10 +1,12 @@
 {
 	"name": "leader-tab",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "An algorithm for selecting a leader from all the open tabs of a website.",
 	"license": "MIT",
 	"author": "frectonz",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",

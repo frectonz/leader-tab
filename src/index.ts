@@ -90,19 +90,20 @@ export function elector(
 			knownTabs.set(msg.tabId, Date.now());
 		} else if (msg.type === "goodbye") {
 			knownTabs.delete(msg.tabId);
-		} else if (msg.type === "new-leader") {
 		}
 	}
 
 	// Listen for incoming messages
 	channel.addEventListener("message", handleMessage);
 
-	// function onTabClose() {
-	// 	channel.postMessage({ type: "goodbye", tabId });
-	// }
+	function sendGoodbye() {
+		channel.postMessage({ type: "goodbye", tabId });
+	}
 
-	// // Clean exit: say goodbye to other tabs
-	// window.addEventListener("beforeunload", onTabClose);
+	// Clean exit: say goodbye to other tabs
+	if (typeof window !== "undefined" && window.addEventListener) {
+		window.addEventListener("beforeunload", sendGoodbye);
+	}
 
 	const heartbeatIntervalId = setInterval(heartbeat, heartbeatInterval);
 	const cleanupIntervalId = setInterval(cleanup, heartbeatInterval);
@@ -113,9 +114,13 @@ export function elector(
 		destroy: () => {
 			clearInterval(heartbeatIntervalId);
 			clearInterval(cleanupIntervalId);
-			// window.removeEventListener("beforeunload", onTabClose);
-			channel.postMessage({ type: "goodbye", tabId });
 			channel.removeEventListener("message", handleMessage);
+
+			if (typeof window !== "undefined" && window.removeEventListener) {
+				window.removeEventListener("beforeunload", sendGoodbye);
+			}
+
+			sendGoodbye();
 		},
 	});
 }

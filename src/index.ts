@@ -36,7 +36,10 @@ const defaultParams: Required<ElectorParams> = {
  * Sets up elector selection mechanism.
  */
 export function elector(
-	{ onLeaderElected, onLeaderDemoted }: ElectorCallbacks,
+	{ onLeaderElected, onLeaderDemoted }: ElectorCallbacks = {
+		onLeaderElected: () => {},
+		onLeaderDemoted: () => {},
+	},
 	{
 		channelName = defaultParams.channelName,
 		heartbeatInterval = defaultParams.heartbeatInterval,

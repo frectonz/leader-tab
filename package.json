@@ -1,6 +1,6 @@
 {
 	"name": "leader-tab",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "An algorithm for selecting a leader from all the open tabs of a website.",
 	"license": "MIT",
 	"author": "frectonz",

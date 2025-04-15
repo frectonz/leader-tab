@@ -14,7 +14,9 @@ async function onlyOneLeader(count: number) {
 	expect(oneLeader).toBe(true);
 
 	return () => {
-		tabs.forEach((tab) => tab.destroy());
+		for (const tab of tabs) {
+			tab.destroy();
+		}
 	};
 }
 
